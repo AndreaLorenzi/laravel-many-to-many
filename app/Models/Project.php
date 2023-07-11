@@ -14,4 +14,8 @@ class Project extends Model
         // belongsTo si usa nel model della tabella che ha la chiave esterna, di conseguenza quella che sta dalla parte del molti
         return $this->belongsTo(Type::class);
     }
+    public function technologies()
+    {
+        return $this->belongsToMany(technologies::class);
+    }
 }
