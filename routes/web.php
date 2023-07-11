@@ -19,7 +19,7 @@ use App\Http\Controllers\Guest\PageController as GuestsPageController;
 |
 */
 
-Route::get('/', [GuestsPageController::class, 'home'])->name('guests.home');
+Route::get('/', [GuestPageController::class, 'home'])->name('guests.home');
 
 Route::get('/admin', [AdminPageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('admin.dashboard');
 

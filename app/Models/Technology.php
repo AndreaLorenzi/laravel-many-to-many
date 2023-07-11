@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Tecnology extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     public function project()
     {
         return $this->belongsToMany(Project::class);

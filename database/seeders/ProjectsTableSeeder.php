@@ -14,7 +14,7 @@ class ProjectsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run(Faker $faker)
+    public function run()
     {
         foreach(config('projects') as $objProject) {
 
