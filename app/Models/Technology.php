@@ -6,7 +6,7 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tecnology extends Model
+class Technology extends Model
 {
     use HasFactory;
     public $timestamps = false;

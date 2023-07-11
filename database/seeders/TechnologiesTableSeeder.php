@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Technology;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TechonologiesTableSeeder extends Seeder
+class TechnologiesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,25 +17,25 @@ class TechonologiesTableSeeder extends Seeder
     {
         $technologies = [
             [
-                'techonology'  => 'php',
+                'technologies'  => 'php',
             ],
             [
-                'techonology'  => 'js',
+                'technologies'  => 'js',
             ],
             [
-                'techonology'  => 'html',
+                'technologies'  => 'html',
             ],
             [
-                'techonology'  => 'css',
+                'technologies'  => 'css',
             ],
             [
-                'techonology'  => 'laravel',
+                'technologies'  => 'laravel',
             ],
             [
-                'techonology'  => 'bootstrap',
+                'technologies'  => 'bootstrap',
             ],
             [
-                'techonology'  => 'Vue.js',
+                'technologies'  => 'Vue.js',
             ],
         ];
 
