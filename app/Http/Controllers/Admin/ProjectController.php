@@ -6,6 +6,7 @@ use App\Models\Type;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -17,9 +18,11 @@ class ProjectController extends Controller
         "author"           => "required|string|max:30",
         "collaborators"    => "nullable|string|max:150",
         "description"      => "nullable|string|max:2000",
-        "languages"        => "required|string|max:50",
+        // "languages"        => "required|string|max:50",
         "link_github"      => "required|string|url|max:150",
         "type_id"          => "required|integer|exists:types,id",
+        // 'technologies'      => 'nullable|array',
+        // 'technologies. *'   => 'intger|exists:technologies,id',
     ];
 
     private $validation_messages = [
@@ -41,7 +44,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::All();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
 
@@ -60,12 +65,13 @@ class ProjectController extends Controller
         $newProject->author        = $data['author'];
         $newProject->collaborators = $data['collaborators'];
         $newProject->description   = $data['description'];
-        $newProject->languages     = $data['languages'];
+        // $newProject->languages     = $data['languages'];
         $newProject->link_github   = $data['link_github'];
         $newProject->type_id       = $data['type_id'];
 
         $newProject->save();
 
+        $newProject->technologies()->sync($data['technologies'] ?? []);
         // rotta di tipo get
         return to_route('admin.project.show', ['project' => $newProject]);
     }
@@ -80,7 +86,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::All();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
 
@@ -98,11 +105,12 @@ class ProjectController extends Controller
         $project->author        = $data['author'];
         $project->collaborators = $data['collaborators'];
         $project->description   = $data['description'];
-        $project->languages     = $data['languages'];
+        // $project->languages     = $data['languages'];
         $project->link_github   = $data['link_github'];
         $project->type_id       = $data['type_id'];
         
         $project->update();
+        $project->technologies()->sync($data['technologies'] ?? []);
 
         // rotta di tipo get
         return to_route('admin.project.show', ['project' => $project->id]);
@@ -135,6 +143,7 @@ class ProjectController extends Controller
     {
         $project = Project::withTrashed()->find($id);
         $project->forceDelete();
+        $project->technologies()->detach();
 
         return to_route('admin.project.trashed')->with('delete_success', $project);
     }

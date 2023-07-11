@@ -15,32 +15,9 @@ class TechnologiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $technologies = [
-            [
-                'technologies'  => 'php',
-            ],
-            [
-                'technologies'  => 'js',
-            ],
-            [
-                'technologies'  => 'html',
-            ],
-            [
-                'technologies'  => 'css',
-            ],
-            [
-                'technologies'  => 'laravel',
-            ],
-            [
-                'technologies'  => 'bootstrap',
-            ],
-            [
-                'technologies'  => 'Vue.js',
-            ],
-        ];
 
-        foreach ($technologies as $technology) {
-            Technology::create($technology);
+        foreach (config('technologies') as $objTechnology) {
+            Technology::create($objTechnology);
         }
     }
 }

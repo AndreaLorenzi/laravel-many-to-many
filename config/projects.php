@@ -9,6 +9,7 @@ return[
         "collaborators"    => "",
         "description"      => "A clone of the spotify web interface",
         "link_github"      => "https://github.com/AndreaLorenzi/html-css-spotifyweb",
+        "technologies" => [1],
         "type_id"          => "1"
     ],
     [
@@ -18,6 +19,7 @@ return[
         "last_update"      => "2023-04-27",
         "collaborators"    => "",
         "description"      => "A minefield clone",
+        "technologies" => [1, 2],
         "link_github"      => "https://github.com/AndreaLorenzi/js-campominato-dom",
         "type_id"          => "1"
     ],
@@ -29,6 +31,7 @@ return[
         "last_update"      => "2023-05-04",
         "collaborators"    => "",
         "description"      => "A Facebook clone",
+        "technologies" => [1, 2],
         "link_github"      => "https://github.com/AndreaLorenzi/js-social-posts",
         "type_id"          => "1"
     ],
@@ -40,6 +43,8 @@ return[
         "last_update"      => "2023-05-15",
         "collaborators"    => "",
         "description"      => "A Whatsapp clone",
+        "technologies" => [1, 3],
+
         "link_github"      => "https://github.com/AndreaLorenzi/vue-boolzapp",
         "type_id"          => "1"
 
@@ -52,6 +57,7 @@ return[
         "last_update"      => "2023-05-31",
         "collaborators"    => "",
         "description"      => "Avada Restourant Clone",
+        "technologies" => [1, 3],
         "link_github"      => "https://github.com/AndreaLorenzi/proj-html-vuejs",
         "type_id"          => "1"
     ],
@@ -63,6 +69,8 @@ return[
         "last_update"      => "2023-07-03",
         "collaborators"    => "",
         "description"      => "A Dc Comics site homepage clone",
+        "technologies" => [1, 3],
+
         "link_github"      => "https://github.com/AndreaLorenzi/laravel-dc-comics",
         "type_id"          => "2"
     ],
@@ -75,6 +83,7 @@ return[
         "last_update"      => "2023-07-004",
         "collaborators"    => "Andrea Lorenzi, Vincenzo Minardi, Gianluca Ligori, Andrea Serra, Gabriella Valentina",
         "description"      => "A invoices organizer",
+        "technologies" => [5],
         "link_github"      => "https://github.com/AndreaLorenzi/laravel-boolean",
         "type_id"          => "3"
     ],
