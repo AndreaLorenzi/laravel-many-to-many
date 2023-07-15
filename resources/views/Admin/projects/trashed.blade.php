@@ -1,42 +1,55 @@
 @extends('admin.layouts.base')
-
 @section('contents')
     @if (session('delete_success'))
-        @php $type = session('delete_success') @endphp
+        @php $project = session('delete_success') @endphp
         <div class="alert alert-danger">
-            The Type "{{ $type->name }}" has been permanently deleted
+            The Project "{{ $project->title }}" has been permanently deleted
         </div>
     @endif
-
-
     @if (session('restore_success'))
-        @php $type = session('restore_success') @endphp
+        @php $project = session('restore_success') @endphp
         <div class="alert alert-success">
-            The Type '{{ $type->name }}' has been restored
+            The Project '{{ $project->title }}' has been restored
         </div>
     @endif
-
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Last Update</th>
+                <th scope="col">Collaborators</th>
                 <th scope="col">Description</th>
+                <th scope="col">Technologies</th>
+                <th scope="col">Link</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($trashedTypes as $type)
+            @foreach ($trashedProjects as $project)
                 <tr>
-                    <th scope="row">{{ $type->name }}</th>
-                    <td>{{ $type->description }}</td>
+                    <th scope="row">{{ $project->title }}</th>
+                    <td>{{ $project->author }}</td>
+                    <td>{{ $project->creation_date }}</td>
+                    <td>{{ $project->last_update }}</td>
+                    <td>{{ $project->collaborators }}</td>
+                    <td>{{ $project->description }}</td>
+                    <td>
+                        @foreach ($project->technologies as $technology)
+                            <a
+                                href="{{ route('admin.technology.show', ['technology' => $technology]) }}">{{ $technology->name }}</a>
+                        @endforeach
+                    </td>
+                    <td><a href="{{ $project->link_github }}">Link</a></td>
                     <td>
                         <form class="d-inline-block" method="POST"
-                            action="{{ route('admin.type.restore', ['type' => $type->id]) }}">
+                            action="{{ route('admin.project.restore', ['project' => $project->id]) }}">
                             @csrf
                             <button class="btn btn-warning">Restore</button>
                         </form>
                         <button type="button" class="btn btn-danger js-delete" data-bs-toggle="modal"
-                            data-bs-target="#deleteModal" data-id="{{ $type->id }}">
+                            data-bs-target="#deleteModal" data-id="{{ $project->id }}">
                             Delete
                         </button>
                     </td>
@@ -44,7 +57,6 @@
             @endforeach
         </tbody>
     </table>
-
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -67,6 +79,5 @@
             </div>
         </div>
     </div>
-
-    {{ $trashedTypes->links() }}
+    {{ $trashedProjects->links() }}
 @endsection
