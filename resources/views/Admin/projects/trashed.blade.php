@@ -44,7 +44,7 @@
                     <td><a href="{{ $project->link_github }}">Link</a></td>
                     <td>
                         <form class="d-inline-block" method="POST"
-                            action="{{ route('admin.project.restore', ['project' => $project->id]) }}">
+                            action="{{ route('admin.project.restore', ['project' => $project]) }}">
                             @csrf
                             <button class="btn btn-warning">Restore</button>
                         </form>

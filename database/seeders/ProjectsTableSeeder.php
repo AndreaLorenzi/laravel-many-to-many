@@ -20,9 +20,12 @@ class ProjectsTableSeeder extends Seeder
         // $technologies = Technology::all();
         foreach(config('projects') as $objProject) {
 
+            $slug = Project::slugger($objProject['title']);
+
             // Project::create($objProject);
             $project = Project::create([
                 'type_id' => $objProject['type_id'],
+                "slug" => $slug,
                 'title' => $objProject['title'],
                 'author' => $objProject['author'],
                 'creation_date' => $objProject['creation_date'],
