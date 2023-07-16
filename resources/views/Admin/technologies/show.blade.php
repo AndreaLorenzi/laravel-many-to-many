@@ -7,7 +7,7 @@
     <h2>Latest Project in this Technology</h2>
     <ul>
         @foreach ($technology->projects as $project)
-            <li><a href="{{ route('admin.project.show', ['project' => $project]) }}">{{ $project->title }}</a></li>
+            <li><a href="{{ route('admin.projects.show', ['project' => $project]) }}">{{ $project->title }}</a></li>
         @endforeach
     </ul>
 @endsection

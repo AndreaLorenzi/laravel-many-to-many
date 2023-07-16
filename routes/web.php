@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
-use App\Http\Controllers\Guest\PageController as GuestPageController;
+use App\Http\Controllers\Guests\PageController as GuestsPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Http\Controllers\Guest\PageController as GuestPageController;
 |
 */
 
-Route::get('/', [GuestPageController::class, 'home'])->name('guests.home');
+Route::get('/', [GuestsPageController::class, 'home'])->name('guests.home');
 
 Route::get('/admin', [AdminPageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('admin.dashboard');
 
@@ -37,14 +38,17 @@ Route::middleware('auth', 'verified')
 ->prefix('admin')
 ->group(function () {
     Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
+    // Project route
     Route::get('project/trashed', [ProjectController::class, 'trashed'])->name('project.trashed');
     Route::post('project/{project}/restore', [ProjectController::class, 'restore'])->name('project.restore');
     Route::delete('project/{project}/harddelete', [ProjectController::class, 'harddelete'])->name('project.harddelete');
     Route::resource('project', ProjectController::class);
-    Route::get('type/trashed', [TypeController::class, 'trashed'])->name('type.trashed');
-    Route::post('type/{type}/restore', [TypeController::class, 'restore'])->name('type.restore');
-    Route::delete('type/{type}/harddelete', [TypeController::class, 'harddelete'])->name('type.harddelete');
+    
+    // Type route
     Route::resource('type', TypeController::class);
+
+    // Technology route
+    Route::resource('technology', TechnologyController::class);
 });
 
 require __DIR__.'/auth.php';

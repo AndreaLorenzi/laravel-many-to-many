@@ -115,10 +115,11 @@ class ProjectController extends Controller
 
      public function restore($slug)
      {
+         $project = Project::find($slug);
+         
          Project::withTrashed()->where('slug', $slug)->restore();
          $project = Project::where('slug', $slug)->firstOrFail();
 
-         $project = Project::find($slug);
 
          return to_route('admin.project.trashed')->with('restore_success', $project);
      }
