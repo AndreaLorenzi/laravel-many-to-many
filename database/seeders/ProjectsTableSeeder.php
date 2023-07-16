@@ -1,42 +1,33 @@
 <?php
+ namespace Database\Seeders;
 
-namespace Database\Seeders;
-
-use App\Models\Project;
-use App\Models\Technology;
-use Faker\Generator as Faker;
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+ use App\Models\Project;
+ use App\Models\Type;
+ use App\Models\Technology;
+ use Illuminate\Database\Seeder;
+ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProjectsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
-    {
-        // $technologies = Technology::all();
-        foreach(config('projects') as $objProject) {
+     {
 
-            $slug = Project::slugger($objProject['title']);
+         foreach(config('projects') as $objProject) {
 
-            // Project::create($objProject);
-            $project = Project::create([
-                'type_id' => $objProject['type_id'],
-                "slug" => $slug,
-                'title' => $objProject['title'],
-                'author' => $objProject['author'],
-                'creation_date' => $objProject['creation_date'],
-                'last_update' => $objProject['last_update'],
-                'collaborators' => $objProject['collaborators'],
-                'description' => $objProject['description'],
-                'link_github' => $objProject['link_github'],
+             $slug = Project::slugger($objProject['title']);
 
+             $project = Project::create([
+                 "title"         => $objProject['title'],
+                 "slug"          => $slug,
+                 "author"        => $objProject['author'],
+                 "creation_date" => $objProject['creation_date'],
+                 "last_update"   => $objProject['last_update'],
+                "collaborators" => $objProject['collaborators'],
+                "description"   => $objProject['description'],
+                "link_github"   => $objProject['link_github'],
+                "type_id"       => $objProject['type_id'],
             ]);
             $project->technologies()->sync($objProject['technologies']);
-
         }
     }
 }

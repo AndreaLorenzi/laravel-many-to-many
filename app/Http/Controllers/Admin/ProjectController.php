@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers\Admin;
-use App\Models\Type;
-use App\Models\Project;
-use App\Models\Technology;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+ use App\Models\Type;
+ use App\Models\Project;
+ use App\Models\Technology;
+ use Illuminate\Support\Str;
+ use Illuminate\Http\Request;
+ use App\Http\Controllers\Controller;
 
 class ProjectController extends Controller
 {
@@ -42,13 +42,13 @@ class ProjectController extends Controller
         $request->validate($this->validations, $this->validation_messages);
         $data = $request->all();
         // salvare i dati nel db
-        $newProject = new Project();
+         $newProject = new Project();
 
-        $newProject->title         = $data['title'];
-        $newProject->slug          = Project::slugger($data['title']);
-        $newProject->creation_date = $data['creation_date'];
-        $newProject->last_update   = $data['last_update'];
-        $newProject->author        = $data['author'];
+         $newProject->title         = $data['title'];
+         $newProject->slug          = Project::slugger($data['title']);
+         $newProject->creation_date = $data['creation_date'];
+         $newProject->last_update   = $data['last_update'];
+         $newProject->author        = $data['author'];
         $newProject->collaborators = $data['collaborators'];
         $newProject->description   = $data['description'];
         $newProject->link_github   = $data['link_github'];
@@ -57,27 +57,34 @@ class ProjectController extends Controller
         $newProject->technologies()->sync($data['technologies'] ?? []);
         // rotta di tipo get
         return to_route('admin.project.show', ['project' => $newProject]);
-    }
-    public function show($slug)
-    {
-        $project = Project::where('slug', $slug)->firstOrFail();
-        return view('admin.projects.show', compact('project'));
-    }
+     }
 
-    public function edit($slug)
-    {$project = Project::where('slug', $slug)->firstOrFail();
 
-        $types = Type::all();
-        $technologies = Technology::all();
+     public function show($slug)
+     {
+         $project = Project::where('slug', $slug)->firstOrFail();
+         return view('admin.projects.show', compact('project'));
+     }
 
-        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
-    }public function update(Request $request, $slug)
-    {
 
-        $project = Project::where('slug', $slug)->firstOrFail();
+     public function edit($slug)
+     {
+         $project = Project::where('slug', $slug)->firstOrFail();
 
-        // validare i dati del form
-        $request->validate($this->validations, $this->validation_messages);
+         $types = Type::all();
+         $technologies = Technology::all();
+
+         return view('admin.projects.edit', compact('project', 'types', 'technologies'));
+     }
+
+
+     public function update(Request $request, $slug)
+     {
+
+         $project = Project::where('slug', $slug)->firstOrFail();
+
+         // validare i dati del form
+         $request->validate($this->validations, $this->validation_messages);
 
         $data = $request->all();
         // aggiornare i dati nel db
@@ -91,40 +98,43 @@ class ProjectController extends Controller
         $project->type_id       = $data['type_id'];
         
         $project->update();
-        $project->technologies()->sync($data['technologies'] ?? []);
+         $project->technologies()->sync($data['technologies'] ?? []);
 
-        // rotta di tipo get    
-        return to_route('admin.project.show', ['project' => $project]);
-    }
-    public function destroy($slug)
-    {
-        $project = Project::where('slug', $slug)->firstOrFail();
+         // rotta di tipo get
+         return to_route('admin.project.show', ['project' => $project]);
+     }
 
-        $project->delete();
+     public function destroy($slug)
+     {
+         $project = Project::where('slug', $slug)->firstOrFail();
 
-        return to_route('admin.project.index')->with('delete_success', $project);
-    }
-    public function restore($slug)
-    {
-        Project::withTrashed()->where('slug', $slug)->restore();
-        $project = Project::where('slug', $slug)->firstOrFail();
-        $project = Project::find($slug);
+         $project->delete();
 
-        return to_route('admin.project.trashed')->with('restore_success', $project);
-    }
+         return to_route('admin.project.index')->with('delete_success', $project);
+     }
+
+     public function restore($slug)
+     {
+         Project::withTrashed()->where('slug', $slug)->restore();
+         $project = Project::where('slug', $slug)->firstOrFail();
+
+         $project = Project::find($slug);
+
+         return to_route('admin.project.trashed')->with('restore_success', $project);
+     }
     public function trashed()
     {
         $trashedProjects = Project::onlyTrashed()->paginate(5);
-        return view('admin.projects.trashed', compact('trashedProjects'));
-    }
+         return view('admin.projects.trashed', compact('trashedProjects'));
+     }
 
-    public function harddelete($slug)
-    {
-        $project = Project::withTrashed()->find($slug);
+     public function harddelete($slug)
+     {
+         $project = Project::withTrashed()->find($slug);
 
-        // se ho il trashed lo inserisco nel harddelete
-        $project->technologies()->detach();
-        $project->forceDelete();
-        return to_route('admin.project.trashed')->with('delete_success', $project);
-    }
-}
+         // se ho il trashed lo inserisco nel harddelete
+         $project->technologies()->detach();
+         $project->forceDelete();
+         return to_route('admin.project.trashed')->with('delete_success', $project);
+     }
+ }
